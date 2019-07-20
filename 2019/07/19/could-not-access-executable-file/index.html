@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>how to deal with error &#34;Could not access executable file&#34; (mainly for developer) | Bud Adamas&#39; Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="After a lot of code has been modified, like merging two branches, we usuallymeet the problem like this in sqlci: 12*** ERROR[2012] Server process tdm_arkesp could not be created on kylin-44.esgyn.cn -">
+<meta name="keywords" content="EsgynDB,Trafodion">
+<meta property="og:type" content="article">
+<meta property="og:title" content="how to deal with error &quot;Could not access executable file&quot; (mainly for developer)">
+<meta property="og:url" content="https://bud-adamas.github.io/2019/07/19/could-not-access-executable-file/index.html">
+<meta property="og:site_name" content="Bud Adamas&#39; Home">
+<meta property="og:description" content="After a lot of code has been modified, like merging two branches, we usuallymeet the problem like this in sqlci: 12*** ERROR[2012] Server process tdm_arkesp could not be created on kylin-44.esgyn.cn -">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-20T09:08:21.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="how to deal with error &quot;Could not access executable file&quot; (mainly for developer)">
+<meta name="twitter:description" content="After a lot of code has been modified, like merging two branches, we usuallymeet the problem like this in sqlci: 12*** ERROR[2012] Server process tdm_arkesp could not be created on kylin-44.esgyn.cn -">
+  
+    <link rel="alternate" href="/atom.xml" title="Bud Adamas&#39; Home" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Bud Adamas&#39; Home</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://bud-adamas.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-could-not-access-executable-file" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/19/could-not-access-executable-file/" class="article-date">
+  <time datetime="2019-07-19T05:06:46.000Z" itemprop="datePublished">2019-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      how to deal with error &#34;Could not access executable file&#34; (mainly for developer)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>After a lot of code has been modified, like merging two branches, we usually<br>meet the problem like this in sqlci:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*** ERROR[2012] Server process tdm_arkesp could not be created on kylin-44.esgyn.cn</span><br><span class="line"> - Operating system error 4022, TPCError = 53, error detail = 0. Could not access executable file.</span><br></pre></td></tr></table></figure>
+
+<p>and we can find nothing in the log files.</p>
+<hr>
+<p>To diagnose this problem, we can replace that executable binary with a bash<br>script, and within that script, we can check the linkage and then invoke that<br>executable binary, as the following:</p>
+<ol>
+<li><p>change the binary name, like tdm_arkesp, to tdm_arkesp.bak, with its executable mode unchanged,</p>
+</li>
+<li><p>set up a script, name tdm_arkesp to replace the origin one, under the same directory, with its content like:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">ldd /.../tdm_arkesp.bak |&amp; tee /tmp/tdm_arkesp.ldd</span><br><span class="line">/.../tdm_arkesp.bak $* |&amp; tee /tmp/tdm_arkesp.out</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>check the file /tmp/tdm_arkesp.{ldd,out}, to find the reason,</p>
+</li>
+<li><p>revert the files, by removing the script and renaming the binary back to the origin one, after the problem is fixed.</p>
+</li>
+</ol>
+<hr>
+<p>Usualy, the content of /tmp/tdm_arkesp.out looks like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tdm_arkesp: symbol lookup error:</span><br><span class="line">/opt/trafodion/esgynDB_server-2.5.2/export/lib64/liboptimizer.so: undefined</span><br><span class="line">symbol: _ZN7CmpMain10pExpFuncs_E</span><br></pre></td></tr></table></figure>
+
+<p>we can then check the function CmpMain::ExpFuncs(), which dynamic library that<br>function resides, and make sure liboptimizer.so depends on that library in Makefiles.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://bud-adamas.github.io/2019/07/19/could-not-access-executable-file/" data-id="cjybbacqq0000a3pgweef9o4l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/EsgynDB/">EsgynDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Trafodion/">Trafodion</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/20/open-graphic-application-on-romote-machine-through-SSH/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          open graphic application on romote machine through SSH
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/EsgynDB/">EsgynDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trafodion/">Trafodion</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/EsgynDB/" style="font-size: 10px;">EsgynDB</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Trafodion/" style="font-size: 10px;">Trafodion</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/07/20/open-graphic-application-on-romote-machine-through-SSH/">open graphic application on romote machine through SSH</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/could-not-access-executable-file/">how to deal with error &#34;Could not access executable file&#34; (mainly for developer)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
