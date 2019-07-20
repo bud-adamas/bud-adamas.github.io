@@ -1,7 +1,7 @@
 ---
 title: how to deal with error "Could not access executable file" (mainly for developer)
 date: 2019-07-19 13:06:46
-tags: EsgynDB
+tags: [EsgynDB, Trafodion]
 ---
 After a lot of code has been modified, like merging two branches, we usually
 meet the problem like this in sqlci:
