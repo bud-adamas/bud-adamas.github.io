@@ -5,15 +5,20 @@
   
 
   
-  <title>Tag: SSH | Adamas&#39; blogs</title>
+  <title>How to find a list of jar files that contains a particular class in Linux | Adamas&#39; blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Adamas&#39; blogs">
-<meta property="og:url" content="https://bud-adamas.github.io/tags/SSH/index.html">
+  <meta name="description" content="12find . -type f -name &amp;apos;*.jar&amp;apos; -print0 | xargs -0 -I &amp;apos;&amp;#123;&amp;#125;&amp;apos; sh -c &amp;apos;jar tf &amp;#123;&amp;#125; | grepcom/mypackage/Message.class &amp;gt;/dev/null &amp;amp;&amp;amp; echo &amp;#123;&amp;#125;&amp;apo">
+<meta name="keywords" content="Java,Jar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to find a list of jar files that contains a particular class in Linux">
+<meta property="og:url" content="https://bud-adamas.github.io/2019/07/22/How-to-find-a-list-of-jar-files-that-contains-a-particular-class-in-Linux/index.html">
 <meta property="og:site_name" content="Adamas&#39; blogs">
+<meta property="og:description" content="12find . -type f -name &amp;apos;*.jar&amp;apos; -print0 | xargs -0 -I &amp;apos;&amp;#123;&amp;#125;&amp;apos; sh -c &amp;apos;jar tf &amp;#123;&amp;#125; | grepcom/mypackage/Message.class &amp;gt;/dev/null &amp;amp;&amp;amp; echo &amp;#123;&amp;#125;&amp;apo">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-22T02:01:43.824Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Adamas&#39; blogs">
+<meta name="twitter:title" content="How to find a list of jar files that contains a particular class in Linux">
+<meta name="twitter:description" content="12find . -type f -name &amp;apos;*.jar&amp;apos; -print0 | xargs -0 -I &amp;apos;&amp;#123;&amp;#125;&amp;apos; sh -c &amp;apos;jar tf &amp;#123;&amp;#125; | grepcom/mypackage/Message.class &amp;gt;/dev/null &amp;amp;&amp;amp; echo &amp;#123;&amp;#125;&amp;apo">
   
     <link rel="alternate" href="/atom.xml" title="Adamas&#39; blogs" type="application/atom+xml">
   
@@ -60,40 +65,60 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/07/20/open-graphic-application-on-romote-machine-through-SSH/" class="archive-article-date">
-  <time datetime="2019-07-20T08:48:50.000Z" itemprop="datePublished">Jul 20</time>
+        <section id="main"><article id="post-How-to-find-a-list-of-jar-files-that-contains-a-particular-class-in-Linux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/22/How-to-find-a-list-of-jar-files-that-contains-a-particular-class-in-Linux/" class="article-date">
+  <time datetime="2019-07-22T01:33:24.000Z" itemprop="datePublished">2019-07-22</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/20/open-graphic-application-on-romote-machine-through-SSH/">open graphic application on romote machine through SSH</a>
+    <h1 class="article-title" itemprop="name">
+      How to find a list of jar files that contains a particular class in Linux
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find . -type f -name &apos;*.jar&apos; -print0 | xargs -0 -I &apos;&#123;&#125;&apos; sh -c &apos;jar tf &#123;&#125; | grep</span><br><span class="line">com/mypackage/Message.class &gt;/dev/null &amp;&amp; echo &#123;&#125;&apos;</span><br></pre></td></tr></table></figure>
 
+<p>Steps to find:</p>
+<ol>
+<li>find all Jar files,</li>
+<li>then deal with each jar file by<br> a. list the contents of every jar file,<br> b. filter the class expected,<br> c. show the name of the jar file.</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://bud-adamas.github.io/2019/07/22/How-to-find-a-list-of-jar-files-that-contains-a-particular-class-in-Linux/" data-id="cjydqzv4t0000ixpgr4c9cnkt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jar/">Jar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/20/open-graphic-application-on-romote-machine-through-SSH/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">open graphic application on romote machine through SSH</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         
