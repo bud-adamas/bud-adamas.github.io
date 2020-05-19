@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Adamas&#39; blogs">
 <meta property="og:description" content="After a lot of code has been modified, like merging two branches, we usuallymeet the problem like this in sqlci: 12*** ERROR[2012] Server process tdm_arkesp could not be created on kylin-44.esgyn.cn -">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-05-19T06:13:58.146Z">
+<meta property="og:updated_time" content="2020-05-19T06:16:42.762Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="how to deal with error &quot;Could not access executable file&quot; (mainly for developer)">
 <meta name="twitter:description" content="After a lot of code has been modified, like merging two branches, we usuallymeet the problem like this in sqlci: 12*** ERROR[2012] Server process tdm_arkesp could not be created on kylin-44.esgyn.cn -">
@@ -97,7 +97,7 @@
 <li><p>change the binary name, like tdm_arkesp, to tdm_arkesp.bak, with its executable mode unchanged,</p>
 </li>
 <li><p>set up a script, name tdm_arkesp to replace the origin one, under the same directory, with its content like:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">ldd /.../tdm_arkesp.bak |&amp; tee /tmp/tdm_arkesp.ldd</span><br><span class="line">../tdm_arkesp.bak $* |&amp; tee /tmp/tdm_arkesp.out</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">ldd ./tdm_arkesp.bak |&amp; tee /tmp/tdm_arkesp.ldd</span><br><span class="line">./tdm_arkesp.bak $* |&amp; tee /tmp/tdm_arkesp.out</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>check the file /tmp/tdm_arkesp.{ldd,out}, to find the reason,</p>
 </li>
@@ -113,7 +113,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://bud-adamas.github.io/2019/07/19/could-not-access-executable-file/" data-id="ckadiwfq800058gpg6ux220jq" class="article-share-link">Share</a>
+      <a data-url="https://bud-adamas.github.io/2019/07/19/could-not-access-executable-file/" data-id="ckadiz9ug0005mepgi6yxoqfs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/EsgynDB/">EsgynDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Trafodion/">Trafodion</a></li></ul>
