@@ -23,14 +23,14 @@ executable binary, as the following:
     #!/bin/bash
 
     ldd /.../tdm_arkesp.bak |& tee /tmp/tdm_arkesp.ldd
-    /.../tdm_arkesp.bak $* |& tee /tmp/tdm_arkesp.out
+    ../tdm_arkesp.bak $* |& tee /tmp/tdm_arkesp.out
 ```
 3. check the file /tmp/tdm_arkesp.{ldd,out}, to find the reason,
 4. revert the files, by removing the script and renaming the binary back to the origin one, after the problem is fixed.
 
 ***
 
-Usualy, the content of /tmp/tdm_arkesp.out looks like this:
+Usually, the content of /tmp/tdm_arkesp.out looks like this:
 ```
 tdm_arkesp: symbol lookup error:
 /opt/trafodion/esgynDB_server-2.5.2/export/lib64/liboptimizer.so: undefined
